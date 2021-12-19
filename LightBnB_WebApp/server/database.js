@@ -10,7 +10,7 @@ const pool = new Pool({
 const properties = require('./json/properties.json');
 const users = require('./json/users.json');
 
-// Users
+// ----------- Users -----------
 
 /**
  * Get a single user from the database given their email.
@@ -30,6 +30,7 @@ const getUserWithEmail = function(email) {
   return Promise.resolve(user);
 };
 exports.getUserWithEmail = getUserWithEmail;
+
 
 /**
  * Get a single user from the database given their id.
@@ -55,7 +56,8 @@ const addUser = function(user) {
 };
 exports.addUser = addUser;
 
-/// Reservations
+
+// ----------- Reservations -----------
 
 /**
  * Get all reservations for a single user.
@@ -67,7 +69,9 @@ const getAllReservations = function(guest_id, limit = 10) {
 };
 exports.getAllReservations = getAllReservations;
 
-/// Properties
+
+
+// ----------- Properties -----------
 
 /**
  * Get all properties.
