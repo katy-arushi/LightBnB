@@ -24,7 +24,12 @@ const getUserWithEmail = function(email) {
      WHERE email = $1`
       , [email.toLowerCase()])
     .then((result) => {
-      return result.rows[0];
+      if (result.rows[0]) {
+        console.log(result.rows[0]);
+        return result.rows[0];
+      } else {
+        return null;
+      }
     })
     .catch((err) => {
       console.log(err.message);
