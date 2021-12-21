@@ -50,7 +50,11 @@ const getUserWithId = function (id) {
      WHERE id = $1`
       , [id])
     .then((result) => {
-      return result.rows[0];
+      if (result.rows[0]) {
+        return result.rows[0];
+      } else {
+        return null;
+      }
     })
     .catch((err) => {
       console.log(err.message);
