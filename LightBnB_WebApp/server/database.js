@@ -73,11 +73,7 @@ const addUser = function(user) {
     RETURNING *;`
     , [user.name, user.email, user.password])
     .then((result) => {
-      if (result.rows[0]) {
-        return result.rows[0];
-      } else {
-        return null;
-      }
+      return result.rows[0];
     })
     .catch((err) => {
       console.log(err.message);
@@ -97,14 +93,18 @@ exports.addUser = addUser;
 const getAllReservations = function(guest_id, limit = 10) {
   return pool
     .query(
-      `SELECT * FROM reservations WHERE guest_id = $1 LIMIT $2;`
+      `SELECT reservations.id, properties.title, properties.cost_per_night, reservations.start_date, avg(rating) as average_rating
+      FROM reservations
+      JOIN properties ON reservations.property_id = properties.id
+      JOIN property_reviews ON properties.id = property_reviews.property_id
+      WHERE reservations.guest_id = $1
+      GROUP BY properties.id, reservations.id
+      ORDER BY reservations.start_date
+      LIMIT $2;`
       , [guest_id, limit])
     .then((result) => {
-      if (result.rows[0]) {
-        return result.rows[0];
-      } else {
-        return null;
-      }
+      console.log(result.rows);
+      return result.rows[0];
     })
     .catch((err) => {
       console.log(err.message);
@@ -124,15 +124,12 @@ exports.getAllReservations = getAllReservations;
  * @param {*} limit The number of results to return.
  * @return {Promise<[{}]>}  A promise to the properties.
  */
-const getAllProperties = (options, limit = 10) => {
+const getAllProperties = (limit = 10) => {
   return pool
     .query(`SELECT * FROM properties LIMIT $1`, [limit])
     .then((result) => {
-      if (result.rows[0]) {
-        return result.rows[0];
-      } else {
-        return null;
-      }
+      console.log(results.rows)
+      return result.rows[0];
     })
     .catch((err) => {
       console.log(err.message);
