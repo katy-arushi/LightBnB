@@ -54,13 +54,15 @@ $(() => {
       })
       .catch(error => console.error(error));
   });
-  $("header").on("click", '.my_listing_button', function() {
+
+  $("header").on("click", '.my_listing_button', function () {
     propertyListings.clearListings();
+    console.log(`current user: ${currentUser.id}`)
     getAllListings(`owner_id=${currentUser.id}`)
-      .then(function(json) {
+      .then(function (json) {
         propertyListings.addProperties(json.properties);
         views_manager.show('listings');
-    });
+      });
   });
 
   $("header").on("click", '.home', function() {
