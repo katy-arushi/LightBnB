@@ -168,8 +168,7 @@ const getAllProperties = (options, limit = 10) => {
 
   // 5
   console.log(queryString, queryParams);
-  console.log("running query now");
-
+  
   // 6
   return pool.query(queryString, queryParams).then((res) => res.rows);
 };
